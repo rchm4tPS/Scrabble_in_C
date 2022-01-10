@@ -1,0 +1,16 @@
+===================================================================		
+||			       ABOUT				 ||
+||===============================================================||
+||	Author 		: Kelompok B5_Gamers			 ||
+||		  	  - Rachmat Purwa Saputra		 ||
+||	 		  - Mochamad Ferdy Fauzan		 ||
+||			  - Ghessa Theniana			 ||
+||	Release date 	: 10 - 01 - 2022			 ||
+||	Compiler 	: Code::Blocks 20.03, Dev C++		 ||
+||===============================================================||
+|| Scrabble kami merupakan replika dari permainan papan scrabble || 	
+|| di dunia yang kami coba buat ke dalam bentuk program komputer ||	
+|| sederhana dari bahasa C. Akan tampil sebagai suatu file 	 ||
+|| executable di dalam tampilan jendela konsol. Dalam game ini,  ||
+|| tersedia mode Player vs Player.				 ||
+===================================================================

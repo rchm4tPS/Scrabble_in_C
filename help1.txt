@@ -1,0 +1,53 @@
+==========================================================================	
+||			      	   HELP				 	||
+||======================================================================||
+|| Tujuan utama : menghasilkan poin sebanyak-banyaknya dari kegiatan	||
+||	          menyusun kata-kata berbahasa Inggris dari huruf-huruf ||
+||	          yang disediakan				 	||
+||======================================================================||
+|| 1. Masing-masing pemain akan “diberikan” tujuh buah kotak alfabet	||
+||    secara random dan akan selalu mendapat 7 huruf yang random di	||
+||    setiap giliran mainnya. 						||
+||	- Kata yang diterima untuk bisa dimainkan adalah kata berbahasa ||
+||	  Inggris							||
+||	- Kata dapat disimpan secara horizontal dari kiri ke kanan,	||
+||	  atau secara vertikal dari atas ke bawah. Menuliskan secara 	||
+||	  terbalik tidak diperbolehkan					||
+|| 2. Tersedia persegi dengan ukuran 15 x 15 kotak kecil (papan bermain)||
+|| 3. Tersedia beberapa fitur yang dapat dipilih oleh pemain melalui	||
+||    masukkan keyboard pada saat gilirannya bermain :			||
+||	- Input kata (untuk menginput kata yang telah disusun)		||
+||	- Pass giliran (untuk lewat giliran main)			||
+||	- Shuffle (untuk mengacak huruf yang dimiliki pemain)		||
+||	- Swap huruf (untuk menukar huruf yang dimiliki pemain)*	||
+||	  {belum tersedia}						||
+||	- Surrender (untuk menyatakan menyerah dan permainan akan 	||
+||		     berakhir)						||
+|| 4. Pemain menginputkan letak awal suatu kata yang akan dimasukkan 	||
+||    dalam bentuk digit angka (representasi letak baris dan kolom). 	||
+|| 5. Pemain menginputkan arah penulisan kata di papan(v--> vertikal 	||
+||    dan h--> horizontal)						||
+|| 6. Pemain diminta untuk menginputkan kata yang ingin disusunnya.	||
+||    Jika kata yang diinputkan pada langkah 6 ada di dalam kamus, 	||
+||    dilanjutkan ke langkah selanjutnya. Jika tidak, maka pemain harus ||
+||    terus mengulangi memasukkan kata yang memang terdapat di dalam	||
+||    kamus rujukan.							||
+|| 7. Pemain memasukkan index huruf yang dipegang oleh pemain dan pemain|| 
+||    memastikan bahwa susunan index huruf yang diketikkan menunjuk 	||
+||    kepada huruf yang disusun pada kata. Jika tidak, pemain akan	||
+||    diminta untuk melakukan langkah 7 sampai semua susunan index huruf|| 
+||    yang diketikkan menunjuk tepat kepada semua huruf yang disusunnya ||
+|| 8. Kata tersebut akan dihitung skornya berdasarkan nilai setiap huruf||
+||    pada Scrabble kami.						||
+||	Keterangan :							||
+||	@ --> double-letter	+ --> triple-letter			||
+||	= --> double-word	# --> triple-word			||
+|| 9. Setiap kali berhasil memasukkan kata ke papan, skor pemain akan 	||
+||    bertambah dan giliran main akan berpindah ke lawannya.		||
+|| 10.Langkah 3 s/d 9 dilakukan kembali untuk giliran main berikutnya	||						
+==========================================================================
+
+
+
+
+
