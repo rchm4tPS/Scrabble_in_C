@@ -7,7 +7,8 @@
                 2) Muhammad Ferdy Fauzan
                 3) Ghessa Theniana
     DATE      : 10 Januari 2021
-    COMPILER  : Code::Blocks 20.03, Dev C++
+    COMPILER  : Code::Blocks 20.03 dan Dev C++
+    JUMLAH MODUL DARI LUAR : 3 (tiga) buah
 
     Catatan : Ini bukanlah versi final, masih terdapat kekurangan disana-sini...
 ======================================================================================================== */
@@ -52,11 +53,11 @@ void delay(int ms);
 
 //MODUL INSIDE THE GAME USED HERE
 //BIG CHUNCK OF THE GAME SECTION LISTED FIRST
-int homeMenu();  // untuk memasuki home menu game	//ubah jadi int, dengan kembalian 0
+int homeMenu();
 
-void playGame(); // untuk memasuki gameplay
-void showAbout(); //untuk menampilkan informasi mengenai game
-void showHelp(); //untuk menampilkan how to play
+void playGame();
+void showAbout();
+void showHelp();
 
 void beforeEnteringGameStage(struct Player *dtPlayer, struct AvailableLetter *dtHuruf);
 void duringPlayGame(struct Player *dtPlayer, struct AvailableLetter *dtHuruf, struct Papan *dtPapan);
@@ -132,13 +133,17 @@ void gotoxy(int x, int y){
 }
 
 void delay(int ms){
-    /*Digunakan untuk keperluan loading bar saja*/
+    /*Digunakan untuk keperluan loading bar saja
+      Menahan agar tampilan output ke layar terhenti sesaat selama ms milisekon
+      Sumber referensi : https://www.geeksforgeeks.org/time-delay-c/
+    */
     clock_t timeDelay = ms + clock();
     while(timeDelay > clock());
 }
 
 void printInputNameBox(){
-    /* Untuk menampilkan kerangka kotak input nama pemain saat akan memasuki permainan*/
+    /* Tujuan : untuk menampilkan kerangka kotak / tabel input nama pemain saat akan memasuki permainan*/
+
 	system("mode 90, 12");
     printf("\n\n\t\t");
     char ch1, ch2, ch3, ch4, ch5, ch6, ch7, ch8, ch9, ch10, ch11;   //tabel menggunakan kode ASCII EXTENDED (unsigned char)
@@ -212,7 +217,8 @@ void printInputNameBox(){
 }
 
 int homeMenu(){
-    /* Menampilkan tampilan home menu, terdapat 5 menu di dalamnya*/
+    /* Tujuan : menampilkan tampilan home menu, yang terdapat 5 menu di dalamnya*/
+
 	system("mode 90, 20");
 	int pilihanMenu;
 	char waktuAkhirBermain[64];
@@ -255,12 +261,14 @@ int homeMenu(){
                     showHistory(waktuAkhirBermain);
                     break;
             }
-       	
+
         }while(pilihanMenu!=0);
     return 0;
 }
 
 void playGame(){
+    /* Procedure yang mengatur jalannya fitur Play game setelah pergi dari home Menu*/
+
     system("mode 160, 40");
 	//Definisi untuk variabel string yang menampung teks waktu
 	char waktuAkhirBermain[64];
@@ -280,7 +288,8 @@ void playGame(){
     writeHistory(dtPlayer,waktuAkhirBermain);      //untuk menulis ke file histori permainan
 }
 
-void showHelp(){		//file diubah lagi kontenya
+void showHelp(){
+    /* Tujuan : untuk menampilkan file help dari secondary storage ke program ketika dipanggil menu Help*/
  	system("mode 200, 80");
  	system("cls");
  		FILE*fhp;
@@ -298,6 +307,8 @@ void showHelp(){		//file diubah lagi kontenya
  }
 
 void showAbout(){
+    /* Tujuan : untuk menampilkan file about berisi credits (author, release date, dan penjelasan singkat aplikasi)
+       dari secondary storage ke program ketika dipanggil menu About*/
 	system("mode 70, 22");
 	system("cls");
 		FILE*fa;
@@ -316,6 +327,7 @@ void showAbout(){
 }
 
 void inputPlayerName(char (*nameArr)[8]){
+    /*Menerima input nama player sebelum masuk ke stage permainan*/
     printInputNameBox();
 
     gotoxy(49,5);
@@ -332,6 +344,7 @@ void showLoadingBar(){
     char lcu, rcu, lcb, rcb, vert, horz, thickBar, percentageSign;
     lcu = 201; rcu = 187; lcb = 200; rcb = 188; vert = 186; horz = 205; thickBar = 219; percentageSign = 37;
 
+    //DUA PERULANAGN INI UNTUK MENGATUR TAMPILAN "FRAME" ATAU KOTAK PROSES LOADING BAR SAJA
     for(i = 1; i < 4; i++){
         for(j = 1; j < 55; j++){
             if(i == 1 && j == 1){
@@ -370,6 +383,7 @@ void showLoadingBar(){
     gotoxy(41, 10);
     printf("Now loading ....");
 
+    //PERULANGAN YANG MENGATUR JALANNYA BAR LOADING BAR
     for(i = 0; i < 50; i++){
         gotoxy(22 + i, Y_LOC + 1);
         printf("%c", thickBar);
@@ -385,6 +399,7 @@ void showLoadingBar(){
 }
 
 void printPapan(){
+    /*Untuk menampilkan tampilan papan scrabble ukuran 15 x 15*/
 	system("mode 160, 40");
     system("cls");
     int baris = 1, kolom, n = 61;
@@ -494,6 +509,8 @@ void printPapan(){
 }
 
 void printScoreBox(){
+    /*Untuk menampilkan tampilan kotak/tabel tempat skor kedua pemain berada*/
+
     char ch1, ch2, ch3, ch4, ch5, ch6, ch7, ch8, ch9, ch10, ch11;
     ch1 = 185; //left-ext-middle-right-up-above
     ch2 = 186; //two-vertical
@@ -528,6 +545,7 @@ void printScoreBox(){
 }
 
 void printMenuBox(){
+    /*Untuk menampilkan tampilan tabel/kotak yang berisi 5 pilihan menu saat permainan berlangusng*/
     char ch1, ch2, ch3, ch4, ch5, ch6, ch7, ch8, ch9, ch10, ch11;
     ch1 = 185; //left-ext-middle-right-up-above
     ch2 = 186; //two-vertical
@@ -588,6 +606,9 @@ void printMenuBox(){
 }
 
 int chosenMenu(int pilihan){
+    /*Untuk menerima input menu mana yang dipilih (1 / 2 / 3 / 4 / 5) dari dalam kotak menu box
+      saat permainan berlangusng
+    */
     gotoxy(94,20);
     printf("[");
     scanf("%d", &pilihan);
@@ -596,6 +617,7 @@ int chosenMenu(int pilihan){
 }
 
 void printHurufPeganganBox(){
+    /*Untuk menampilkan tampilan kotak/tabel dimana huruf setiap pemain mendapat giliran main berada*/
     char ch1, ch2, ch3, ch4, ch5, ch6, ch7, ch8, ch9, ch10, ch11;
     ch1 = 185; //left-ext-middle-right-up-above
     ch2 = 186; //two-vertical
@@ -619,6 +641,7 @@ void printHurufPeganganBox(){
 }
 
 void printRandomizeHuruf(char *gudangHuruf, char (*hurufDipegang)[7], int giliran){
+    /*Untuk menampilkan huruf-huruf tiap pemain (huuf pegangan) yang dirandom dari gudangHuruf*/
     int idx_rand;
 
     gotoxy(83,28);
@@ -631,6 +654,7 @@ void printRandomizeHuruf(char *gudangHuruf, char (*hurufDipegang)[7], int gilira
 }
 
 void printInputKataChosen(){
+    /*Untuk menampilkan tampilan kerangka teks instruksi saat pemain memilih menu input kata*/
     char ch2 = 205;
 
     gotoxy(80,11);
@@ -658,6 +682,7 @@ void printInputKataChosen(){
 }
 
 void sucessToInput(int value){
+    /*Untuk menampilkan pesan saat seorang pemain berhasil memasukkan kata ke papan dan  memperoleh skor*/
     char ch2 = 205;
 
     gotoxy(80,17);
@@ -674,6 +699,7 @@ void sucessToInput(int value){
 }
 
 void printCurrentGiliranText(char (*nameArr)[8], int giliran){
+    /*Untuk menampilkan nama pemain terkini yang sedang mendapat giliran bermain scrabble*/
     gotoxy(50,1);
     printf("        ");
     gotoxy(22,1);
@@ -681,6 +707,7 @@ void printCurrentGiliranText(char (*nameArr)[8], int giliran){
 }
 
 bool cekKamus(char *kataDiinput){
+    /*Untuk melakukan proses cek kata yang diinput pemain, apakah terdapat di dalam kamus*/
     char ch[21];
     int getWord = 0;
 
@@ -691,7 +718,7 @@ bool cekKamus(char *kataDiinput){
         system("cls");
         printf("There's no such file! Alas, cannot be opened!\n\n");
         system("pause");
-        exit(EXIT_FAILURE);
+        exit(EXIT_FAILURE); //program terhenti karena file tidak ada
     }
 
     while(!feof(fp) && getWord == 0)
@@ -710,6 +737,7 @@ bool cekKamus(char *kataDiinput){
 }
 
 int roleExchange(int numGiliran){
+    /*Untuk mengganti nomor giliran pemain agar setiap selesai 1 giliran pemain, pemain lain bisa bermain*/
     if(numGiliran == 1)
         return 2;
     else
@@ -717,6 +745,7 @@ int roleExchange(int numGiliran){
 }
 
 int scoringWord(char *plyWord, struct AvailableLetter *dtHuruf){
+    //Menghitung skor dari kata yang dimasukkan pemain ke papan scrabble
     int akumulasiNilaiPerKata = 0;
 
     for(int i = 0; i < strlen(plyWord); i++){
@@ -733,6 +762,7 @@ int scoringWord(char *plyWord, struct AvailableLetter *dtHuruf){
 }
 
 void printScorePlayer(int *skor, int giliran){
+    //Menampilkan skor pemain di kotak skor pemain
     if(giliran == 1){
         gotoxy(84,8);
         printf("%d", skor[giliran - 1]);
@@ -744,17 +774,19 @@ void printScorePlayer(int *skor, int giliran){
 }
 
 void chooseWritDir(struct Player *dtPlayer){
+    //Meminta masukan 'v' atau 'h' dari pemain untuk menentukan direksi atau arah penulisan kata di papan
     fflush(stdin); fflush(stdout);
     scanf(" %c", &dtPlayer->writDir);
 }
 
 void plotToBoard(char *kata, struct Papan *dtPapan, char arah){
+    //Memindahkan kata yang diinput ke papan permainan Scrabble sesuai dengan arah direksi penulisan yang dipilih pemain
     if(arah == 'v' || arah == 'V'){
         int idx = 0;
         do{
             gotoxy(dtPapan->loc_X,dtPapan->loc_Y);
             putchar(kata[idx]);
-            idx++; dtPapan->loc_Y += 2;
+            idx++; dtPapan->loc_Y += 2; //bergeser ke bawah
         } while(idx < strlen(kata));
     }
     else if(arah == 'h' || arah == 'H'){
@@ -762,12 +794,14 @@ void plotToBoard(char *kata, struct Papan *dtPapan, char arah){
         do{
             gotoxy(dtPapan->loc_X,dtPapan->loc_Y);
             putchar(kata[idx]);
-            idx++; dtPapan->loc_X += 4;
+            idx++; dtPapan->loc_X += 4;  //bergeser ke kanan
         } while(idx < strlen(kata));
     }
 }
 
 int checkMatchWithHurufPemain(struct Player *dtPlayer, struct Papan *dtPapan){
+    //Melakukan proses pengecekan, apakah semua huruf yang dimasukkan pemain sama dengan huruf-huruf yang dialamatkan oleh nomor indeks letak huruf
+    // di kotak huruf pemain. Indeks letak huruf 1 ada di paling kiri kotak huruf pemain
     int idx, eqFound;
     do{
         gotoxy(107,4);
@@ -785,7 +819,7 @@ int checkMatchWithHurufPemain(struct Player *dtPlayer, struct Papan *dtPapan){
         do{
             scanf("%d%c", &idxHurufDipilih[idx], &temp);
             if(idxHurufDipilih[idx] == 0)
-                break;
+                break;  //menghentikan perulangan
             idx++;
         } while (temp != '\n');
 
@@ -800,12 +834,12 @@ int checkMatchWithHurufPemain(struct Player *dtPlayer, struct Papan *dtPapan){
             }
 
             if(eqFound == strlen(dtPlayer->playerWord)){
-                plotToBoard(dtPlayer->playerWord,dtPapan,dtPlayer->writDir);
+                plotToBoard(dtPlayer->playerWord,dtPapan,dtPlayer->writDir); //jika benar, maka akan di plot ke papan
                 return 1;
             }
             else{
                 gotoxy(107,4);
-                printf("BAD INPUT (DOESN'T MATCH WITH LETTER INDEX)!");
+                printf("BAD INPUT (DOESN'T MATCH WITH LETTER INDEX)!"); //jika tidak, maka kata tidak akan diplot ke papan, dan proses di modul ini harus diulangi pemain
                 getche();
             }
         } else {
@@ -815,6 +849,7 @@ int checkMatchWithHurufPemain(struct Player *dtPlayer, struct Papan *dtPapan){
 }
 
 int inputWordByPlayer(struct Player *dtPlayer, struct Papan *dtPapan){
+    //menginput 4 macam masukan : letak di papan, arah penulisan kata, kata apa yang akan diinput, dan indeks letak huruf pada kotak huruf pemain
     bool statusKata;
     int matching;
 
@@ -871,6 +906,8 @@ void outputWordAsPerGiliran(char *playerWord, char (*plyName)[8], int giliran){
 }
 
 int inputPosisiDiPapan(struct Papan *dtPapan){
+    //meminta masukan berupa dua angka , representasi kolom dan baris dari pemain
+    //dua angka representasi baris dan kolom dipisahkan oleh spasi saat diinputkan
     gotoxy(118,12); printf(" ");
     fflush(stdin);
 
@@ -880,10 +917,11 @@ int inputPosisiDiPapan(struct Papan *dtPapan){
         return 1;
     }
     else
-        return 0;
+        return 0;  //jika pemain memasukkan 0 0, maka pemain batal memasukkan kata ke papan
 }
 
 int inputWordAsPerGiliran(struct Player *dtPlayer, struct AvailableLetter *dtHuruf, struct Papan *dtPapan){
+    //mengatur proses input kata setiap giliran main pemain
     fflush(stdin);
     printInputKataChosen();
 
@@ -899,11 +937,15 @@ int inputWordAsPerGiliran(struct Player *dtPlayer, struct AvailableLetter *dtHur
         return 1;
     }
     else{
-        return 0;
+        return 0;  //maknanya, pemain membatalkan proses memasukkan kata ke papan
     }
 }
 
 void convertXYforBoard(int X, int Y, struct Papan *dtPapan){
+    //karena nilai X dan Y yang diinput pengguna saat proses input kata
+    //tidak merujuk pada nilai koordinat X dan Y pada layar konsol,
+    //modul ini mengconvert nilai X dan Y masukkan pengguna agar bisa dipakai
+    //oleh modul gotoxy
     X = 4 * (X + 2);
     Y = (2 * Y) + 3;
 
@@ -912,6 +954,7 @@ void convertXYforBoard(int X, int Y, struct Papan *dtPapan){
 }
 
 void shuffleHurufPegangan(char (*hurufmuKini)[7], int giliran){
+    //menshuffle huruf pemain yang ada di tampilan kotak huruf pemain
     int a,b,c,d,e,f,temp;
 
     srand(time(NULL));
@@ -929,6 +972,7 @@ void shuffleHurufPegangan(char (*hurufmuKini)[7], int giliran){
 }
 
 void printAfterShuffled(char (*hurufmuKini)[7],int giliran){
+    //menampilkan huruf yang sudah di shuffled di kotak huruf pemain
     fflush(stdin); fflush(stdout);
     gotoxy(82,28);
     for(int i = 0; i < 7; i++){
@@ -937,12 +981,14 @@ void printAfterShuffled(char (*hurufmuKini)[7],int giliran){
 }
 
 void shuffleLah(struct Player *dtPlayer){
+    //mengatur proses shuffle jika menu ini dipilih pemain
     fflush(stdin);
     shuffleHurufPegangan(dtPlayer->hurufDipegang,dtPlayer->numGiliran);
     printAfterShuffled(dtPlayer->hurufDipegang,dtPlayer->numGiliran);
 }
 
 void initializeOutputForEachRole(struct Player *dtPlayer,struct AvailableLetter *dtHuruf){
+    //mengatur tampilan konsol untuk setiap giliran main pemain berganti
     printScoreBox();
     printHurufPeganganBox();
     printRandomizeHuruf(dtHuruf->gudangHuruf,dtPlayer->hurufDipegang,dtPlayer->numGiliran);
@@ -951,10 +997,12 @@ void initializeOutputForEachRole(struct Player *dtPlayer,struct AvailableLetter 
 }
 
 void fillWordBasket(struct AvailableLetter *dtHuruf){
+    //mengisi array gudang huruf
     memcpy(dtHuruf->gudangHuruf, "AAAAAAAAABBCCDDDDEEEEEEEEEEEEFFGGGHHIIIIIIIIIJKLLLLMMNNNNNNOOOOOOOOPPQRRRRRRSSSSTTTTTTUUUUVVWWXYYZ##", 101);
 }
 
 void beforeEnteringGameStage(struct Player *dtPlayer, struct AvailableLetter *dtHuruf){
+    //proses konfigurasi game sebelum benar-benar masuk kedalam arena permainan
     inputPlayerName(dtPlayer->plyName);
     dtPlayer->plyScore[0] = 0;
     dtPlayer->plyScore[1] = 0;
@@ -999,6 +1047,7 @@ void beforeEnteringGameStage(struct Player *dtPlayer, struct AvailableLetter *dt
 }
 
 void duringPlayGame(struct Player *dtPlayer, struct AvailableLetter *dtHuruf, struct Papan *dtPapan){
+    //mengatur jalannya permainan di dalam stage permainan, selama belum ada pemain yang memilih menu surrender
     int menuChosen, struggling = 0;
     bool surrender = false;
 
@@ -1013,18 +1062,18 @@ void duringPlayGame(struct Player *dtPlayer, struct AvailableLetter *dtHuruf, st
         menuChosen = chosenMenu(menuChosen);
 
         if(menuChosen == 1){
-            struggling = inputWordAsPerGiliran(dtPlayer,dtHuruf,dtPapan);
+            struggling = inputWordAsPerGiliran(dtPlayer,dtHuruf,dtPapan);  //masuk ke proses input kata
         }
         else if(menuChosen == 2){
-            dtPlayer->numGiliran = roleExchange(dtPlayer->numGiliran);
+            dtPlayer->numGiliran = roleExchange(dtPlayer->numGiliran);  //giliran diberikan pada lawannya
         }
-        else if(menuChosen == 3){ //diulang sampai player mencet tombol kb apa, masuk ke inputWordAsPerGiliran deh...
+        else if(menuChosen == 3){
             char button;
             do{
                 fflush(stdin);
-                shuffleLah(dtPlayer);
-                button = getche();
-            } while ((int)button == 27);
+                shuffleLah(dtPlayer);  //proses shuffle huruf dijalankan sekali
+                button = getche();     //untuk setiap kali pemain menekan tombol ESCAPE KEY sekali
+            } while ((int)button == 27);  //pemain menekan tombol enter, maka shuffle terhenti
             struggling = inputWordAsPerGiliran(dtPlayer,dtHuruf,dtPapan);
         }
         else if (menuChosen == 5) {
@@ -1036,6 +1085,8 @@ void duringPlayGame(struct Player *dtPlayer, struct AvailableLetter *dtHuruf, st
 }
 
 void whoIsWinner(struct Player *dtPlayer){
+    //tampilan setelah ada pemain yang memilih surrender
+    //sebagai informasi siapa yang memenangkan permainan scrabble
     printf("\n\t");
     if(dtPlayer->plyScore[0] > dtPlayer->plyScore[1])
         printf("PLAYER %s WON THIS GAME!!!\n", dtPlayer->plyName[0]);
@@ -1048,11 +1099,14 @@ void whoIsWinner(struct Player *dtPlayer){
 }
 
 void afterPlayGameFinished(struct Player *dtPlayer){
+    //setelah sesi permainan scrabble berakhir, akan keluar dari tampilan arena permainan scrabble
     system("cls");
     whoIsWinner(dtPlayer);
 }
 
 void gotQuitTime(char *wkt){
+    //Tujuan : mendapatkan waktu permainan berakhir saat pemain memilih menu surrender
+    //Sumber : https://linuxhint.com/gettimeofday_c_language/
     printf("\n\n");
 
     struct timeval tv;
@@ -1064,40 +1118,41 @@ void gotQuitTime(char *wkt){
     t = tv.tv_sec;
 
     info = localtime(&t);
-    strftime(buffer, sizeof buffer, "%A, %d %b %Y, %H:%M:%S\n", info);
+    strftime(buffer, sizeof buffer, "%A, %d %b %Y, %H:%M:%S\n", info); //format : Hari, tanggal bulan tahun, Jam, menit, detik
     strcpy(wkt, buffer);
 
     //sputs(wkt);
 }
 
-void showHistory(){    //masih salah!!
+void showHistory(){
+    //tujuan : untuk menampilkan isi file history dari secondary storage ketika dipanggil di menu History
 	int i;
 	char ch;
 	system("cls");
 	system("mode 100,35");
 
 	FILE *fh;
-	fh=fopen ("history.csv","r");
+	fh=fopen ("history.csv","r");   //file csv dengan delimiter koma
 
 	gotoxy(0,3);
 	do
     {
         ch = fgetc(fh);
-        if(ch != ','){
+        if(ch != ','){      //agar koma tidak tampil di program saat modul ini dijalankan
             putchar(ch);
         }
         else
-            printf("\t");
+            printf("\t");   //bila karakter koma ditemui, maka gantilah dengan escape character tabulasi
     } while (ch != EOF);
 
 	fclose(fh);
 	getche();
 }
 
-void writeHistory(struct Player *dtPlayer, char wkt[]){      //juga masih salah!!
+void writeHistory(struct Player *dtPlayer, char wkt[]){
+    //Tujuan : menuliskan data nama pemain, skor terakhir yang diperoleh, dan waktu berakhir permainan dalam satu kali sesi permainan scrabble
+    //File terletak di secondary storage yang sejajar dengan letak file ini berada (masih dalam satu folder yang sama)
 	int i,loc_Y;
-
-	//Player *dtPlayer = (Player*)malloc(2*sizeof(Player));
 
 	FILE *fh;
 	fh=fopen ("history.csv","a");
@@ -1109,7 +1164,7 @@ void writeHistory(struct Player *dtPlayer, char wkt[]){      //juga masih salah!
         exit(EXIT_FAILURE);
 	}
 
-    fprintf(fh,"Nama Player,Skor,Waktu Bermain Selesai\n");
+    fprintf(fh,"Nama Player,Skor,Waktu Bermain Selesai\n");  //header tabel setiap data yang dituliskan ke file
 	for (i=0; i<2; i++){
         int skor = dtPlayer->plyScore[i];
         char nama[8];
@@ -1121,11 +1176,17 @@ void writeHistory(struct Player *dtPlayer, char wkt[]){      //juga masih salah!
 
 	fclose(fh);
 
-	printf("\nSuccessfully recorded data to the file!\n");
+	printf("\nSuccessfully recorded data to the file!\n");  //pesan jika proses penulisan ke file berhasil
 	getche();
 }
 
 void fillSpecialField(struct Papan *dtPapan){
+    //Tujuan : memberikan representasi visual di papan permainan scrabble, agar mengetahui di petak mana saja ada penilaian khusus
+    //bila terdapat kata atau huruf yang menginjak petak dengan representasi khusus di bawah
+    // # berarti skor kata dikali 3
+    // @ berarti skor huruf dikali 2
+    // + berarti skor huruf dikali 3
+    // = berarti skor kata dikali 2
     char simbolDiPapan[15][15] = {"#  @   #   @  #",
                                   " +   =   =   + ",
                                   "  +   @ @   +  ",
@@ -1143,6 +1204,7 @@ void fillSpecialField(struct Papan *dtPapan){
                                   "#  @   #   @  #",
                                  };
 
+    //PROSES MENAMPILKAN ARRAY simbolDiPapan ke papan permainan scrabble agar tampil
     int X = 12, Y = 5;
     for(int i = 0; i < 15; i++){
         X = 12;
